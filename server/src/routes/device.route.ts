@@ -6,11 +6,12 @@ import {
   getDeviceById,
   updateDevice,
 } from "../controllers/device.controller";
+import { authCheckToken } from "../middleware/auth.middleware";
 
 export const router = express.Router();
 
-router.post("/device", createDevice);
-router.get("/devices", getAllDevice);
-router.get("/device/:id", getDeviceById);
-router.put("/device/:id", updateDevice);
-router.delete("/device/:id", deleteDevice);
+router.post("/device", authCheckToken, createDevice);
+router.get("/devices", authCheckToken, getAllDevice);
+router.get("/device/:id", authCheckToken, getDeviceById);
+router.put("/device/:id", authCheckToken, updateDevice);
+router.delete("/device/:id", authCheckToken, deleteDevice);
