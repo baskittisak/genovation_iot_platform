@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 export const connectDatabase = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/iot_platform");
+    const { DB_URL } = process.env;
+    if (!DB_URL) throw "Internal server error: Missing DB_URL";
+
+    await mongoose.connect(DB_URL);
     console.log("Database Connected");
   } catch (error) {
     console.error(error);
