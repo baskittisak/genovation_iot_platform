@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { TypedBodyRequest } from "../config/request";
+import { TypedBodyRequest } from "../config/request.config";
 import { IUser } from "./interface/user.interface";
 import User from "../models/user.model";
 import bcrypt from "bcryptjs";

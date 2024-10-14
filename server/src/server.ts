@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import { connectDatabase } from "./config/database.config";
 import { router as authRouter } from "./routes/auth.route";
-import { connectDatabase } from "./config/database";
+import { router as deviceRouter } from "./routes/device.route";
 import dotenv from "dotenv";
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.json({ limit: "2mb" }));
 connectDatabase();
 
 app.use("/api", authRouter);
+app.use("/api", deviceRouter);
 
 const { PORT } = process.env;
 
