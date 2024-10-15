@@ -10,7 +10,7 @@ import notification from "antd/lib/notification";
 import ExclamationCircleOutlined from "@ant-design/icons/ExclamationCircleOutlined";
 import { IDevice } from "./interface/device.interface";
 
-interface DeviceProps {
+interface ModalDeleteDeviceProps {
   deviceId: string;
   isOpenModal: boolean;
   onCloseAction: (action: "delete") => void;
@@ -22,7 +22,7 @@ function ModalDeleteDevice({
   isOpenModal,
   onCloseAction,
   mutateDevices,
-}: DeviceProps) {
+}: ModalDeleteDeviceProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onDelete = useCallback(async () => {

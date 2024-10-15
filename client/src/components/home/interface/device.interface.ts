@@ -2,6 +2,6 @@ export interface IDevice {
   key?: string;
   id: string;
   name: string;
-  description: number;
+  description: string;
   feature: string[];
 }

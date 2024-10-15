@@ -9,13 +9,13 @@ import Space from "antd/lib/space";
 import Typography from "antd/lib/typography";
 import { IDevice } from "./interface/device.interface";
 
-interface DeviceProps {
+interface ModalDeviceProps {
   deviceId: string;
   isOpenModal: boolean;
   onCloseAction: (action: "view") => void;
 }
 
-function ModalDevice({ deviceId, isOpenModal, onCloseAction }: DeviceProps) {
+function ModalDevice({ deviceId, isOpenModal, onCloseAction }: ModalDeviceProps) {
   const { data, error } = useSWR<IDevice>(`/device/${deviceId}`);
 
   if (!data) return <Skeleton />;

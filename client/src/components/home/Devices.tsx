@@ -13,6 +13,7 @@ import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import { type TableProps } from "antd";
 import { IDevice } from "./interface/device.interface";
 import ModalDevice from "./ModalDevice";
+import DrawerDevice from "./DrawerDevice";
 import ModalDeleteDevice from "./ModalDeleteDevice";
 
 interface IOpenAction {
@@ -120,6 +121,14 @@ function Devices() {
           deviceId={deviceId}
           isOpenModal={isOpenAction.view}
           onCloseAction={onCloseAction}
+        />
+      )}
+      {isOpenAction.edit && (
+        <DrawerDevice
+          deviceId={deviceId}
+          isOpenModal={isOpenAction.edit}
+          onCloseAction={onCloseAction}
+          mutateDevices={mutate}
         />
       )}
       {isOpenAction.delete && (
