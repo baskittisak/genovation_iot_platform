@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { z } from "zod";
 
 const deviceSchema = new mongoose.Schema(
   {
@@ -10,3 +11,9 @@ const deviceSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("devices", deviceSchema);
+
+export const typeDevice = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().min(1, "Description is required"),
+  feature: z.array(z.string()).min(1, "At least one feature is required"),
+});
