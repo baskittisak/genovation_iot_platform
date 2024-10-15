@@ -7,6 +7,8 @@ import Table from "antd/lib/table";
 import Space from "antd/lib/space";
 import Skeleton from "antd/lib/skeleton";
 import Empty from "antd/lib/empty";
+import Flex from "antd/lib/flex";
+import Button from "antd/lib/button";
 import EyeOutlined from "@ant-design/icons/EyeOutlined";
 import EditOutlined from "@ant-design/icons/EditOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
@@ -17,22 +19,31 @@ import DrawerDevice from "./DrawerDevice";
 import ModalDeleteDevice from "./ModalDeleteDevice";
 
 interface IOpenAction {
+  create: boolean;
   view: boolean;
   edit: boolean;
   delete: boolean;
 }
 
-type Action = "view" | "edit" | "delete";
+type Action = "create" | "view" | "edit" | "delete";
 
 function Devices() {
   const [deviceId, setDeviceId] = useState<string>("");
   const [isOpenAction, setIsOpenAction] = useState<IOpenAction>({
+    create: false,
     view: false,
     edit: false,
     delete: false,
   });
 
   const { data, error, mutate } = useSWR<IDevice[]>("/devices");
+
+  const onCreate = useCallback(() => {
+    setIsOpenAction((prevState) => ({
+      ...prevState,
+      create: true,
+    }));
+  }, []);
 
   const onView = useCallback((id: string) => {
     setDeviceId(id);
@@ -113,7 +124,12 @@ function Devices() {
   return (
     <>
       <Layout.Content className="devices-container">
-        <Typography.Title level={3}>IoT Devices</Typography.Title>
+        <Flex justify="space-between" align="center">
+          <Typography.Title level={3}>IoT Devices</Typography.Title>
+          <Button type="primary" onClick={onCreate}>
+            Create device
+          </Button>
+        </Flex>
         <Table<IDevice> columns={columns} dataSource={dataSource} />
       </Layout.Content>
       {isOpenAction.view && (
@@ -123,10 +139,11 @@ function Devices() {
           onCloseAction={onCloseAction}
         />
       )}
-      {isOpenAction.edit && (
+      {(isOpenAction.edit || isOpenAction.create) && (
         <DrawerDevice
+          action={isOpenAction.edit ? "edit" : "create"}
           deviceId={deviceId}
-          isOpenModal={isOpenAction.edit}
+          isOpenModal={isOpenAction.edit || isOpenAction.create}
           onCloseAction={onCloseAction}
           mutateDevices={mutate}
         />

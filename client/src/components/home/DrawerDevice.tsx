@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import "./Home.css";
 import axios, { AxiosError } from "axios";
 import useSWR, { KeyedMutator } from "swr";
@@ -15,13 +15,15 @@ import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import { IDevice } from "./interface/device.interface";
 
 interface DrawerDeviceProps {
+  action: "edit" | "create";
   deviceId: string;
   isOpenModal: boolean;
-  onCloseAction: (action: "edit") => void;
+  onCloseAction: (action: "edit" | "create") => void;
   mutateDevices: KeyedMutator<IDevice[]>;
 }
 
 function DrawerDevice({
+  action,
   deviceId,
   isOpenModal,
   onCloseAction,
@@ -29,10 +31,14 @@ function DrawerDevice({
 }: DrawerDeviceProps) {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [feature, setFeature] = useState<string[]>([]);
+  const [feature, setFeature] = useState<string[]>([""]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { data, error } = useSWR<IDevice>(`/device/${deviceId}`);
+  const isEdit = useMemo(() => {
+    return action === "edit";
+  }, [action]);
+
+  const { data, error } = useSWR<IDevice>(isEdit && `/device/${deviceId}`);
 
   const onInitialData = useCallback((data: IDevice) => {
     const { name, description, feature } = data;
@@ -42,10 +48,10 @@ function DrawerDevice({
   }, []);
 
   useEffect(() => {
-    if (data) {
+    if (isEdit && data) {
       onInitialData(data);
     }
-  }, [data, onInitialData]);
+  }, [isEdit, data, onInitialData]);
 
   const onChangeFeature = useCallback((index: number, value: string) => {
     setFeature((prevState) => {
@@ -81,13 +87,15 @@ function DrawerDevice({
 
       const {
         data: { message },
-      } = await axios.put(`device/${deviceId}`, body);
+      } = isEdit
+        ? await axios.put(`/device/${deviceId}`, body)
+        : await axios.post("/device", body);
 
       notification.success({
         message,
       });
       setIsLoading(false);
-      onCloseAction("edit");
+      onCloseAction(action);
       mutateDevices();
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -102,23 +110,31 @@ function DrawerDevice({
         });
       }
       setIsLoading(false);
-      onCloseAction("edit");
     }
-  }, [name, description, feature, deviceId, onCloseAction, mutateDevices]);
+  }, [
+    name,
+    description,
+    feature,
+    deviceId,
+    isEdit,
+    action,
+    onCloseAction,
+    mutateDevices,
+  ]);
 
-  if (!data) return <Skeleton />;
-  if (error) return <Empty />;
+  if (isEdit && !data) return <Skeleton />;
+  if (isEdit && error) return <Empty />;
 
   return (
     <Drawer
-      title="Edit device"
+      title={`${isEdit ? "Edit" : "Create"} device`}
       closeIcon={false}
-      onClose={() => onCloseAction("edit")}
+      onClose={() => onCloseAction(action)}
       open={isOpenModal}
       width={500}
       extra={
         <Space>
-          <Button disabled={isLoading} onClick={() => onCloseAction("edit")}>
+          <Button disabled={isLoading} onClick={() => onCloseAction(action)}>
             Cancel
           </Button>
           <Button type="primary" loading={isLoading} onClick={onSave}>
@@ -150,7 +166,7 @@ function DrawerDevice({
             {feature.map((value, index) => (
               <Input
                 key={index.toString()}
-                placeholder="Description"
+                placeholder={`Feature ${index + 1}`}
                 value={value}
                 addonAfter={
                   feature.length > 1 && (
