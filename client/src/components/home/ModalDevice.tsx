@@ -15,7 +15,7 @@ interface DeviceProps {
   onCloseAction: (action: "view") => void;
 }
 
-function Device({ deviceId, isOpenModal, onCloseAction }: DeviceProps) {
+function ModalDevice({ deviceId, isOpenModal, onCloseAction }: DeviceProps) {
   const { data, error } = useSWR<IDevice>(`/device/${deviceId}`);
 
   if (!data) return <Skeleton />;
@@ -66,4 +66,4 @@ function Device({ deviceId, isOpenModal, onCloseAction }: DeviceProps) {
   );
 }
 
-export default memo(Device);
+export default memo(ModalDevice);
