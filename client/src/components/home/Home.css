@@ -1,0 +1,26 @@
+.sidebar-container {
+  position: relative;
+  height: 100vh;
+  width: 20% !important;
+  max-width: 20% !important;
+}
+
+.logo {
+  text-align: center;
+  margin: 16px 0 32px 16px;
+}
+
+.user-container {
+  cursor: pointer;
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+}
+
+.avatar-user {
+  background-color: #1777ff;
+}
+
+.username {
+  color: #fff;
+}

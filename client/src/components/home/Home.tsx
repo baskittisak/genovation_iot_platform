@@ -1,7 +1,13 @@
 import { memo } from "react";
+import "./Home.css";
+import Sidebar from "./Sidebar";
 
 function Home() {
-  return <div>Home Page</div>;
+  return (
+    <>
+      <Sidebar />
+    </>
+  );
 }
 
 export default memo(Home);

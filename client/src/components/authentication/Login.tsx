@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import Cookies from "universal-cookie";
 import { InputStatus } from "antd/lib/_util/statusUtils";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 import Splitter from "antd/lib/splitter";
 import Panel from "antd/lib/splitter/Panel";
 import Image from "antd/lib/image";
@@ -19,6 +20,11 @@ import LockOutlined from "@ant-design/icons/LockOutlined";
 import notification from "antd/lib/notification";
 import iot_logo from "../../assets/iot_logo.png";
 import InfoPanel from "./InfoPanel";
+
+interface CustomJwtPayload extends JwtPayload {
+  username: string;
+  email: string;
+}
 
 function Login() {
   const navigate = useNavigate();
@@ -52,6 +58,8 @@ function Login() {
       } = await axios.post("/login", { username, password });
       const cookies = new Cookies();
       cookies.set("access_token", token);
+      const decoded = jwtDecode(token) as CustomJwtPayload;
+      cookies.set("username", decoded.username);
       notification.success({
         message: message,
       });
