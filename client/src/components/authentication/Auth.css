@@ -18,16 +18,24 @@
   align-items: center;
 }
 
-.panel:first-child {
+.panel-left {
   background-color: #fff;
   border-top-left-radius: 24px;
   border-bottom-left-radius: 24px;
+
+  &.register-panel {
+    background-color: #1777ff;
+  }
 }
 
-.panel:last-child {
+.panel-right {
   background-color: #1777ff;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
+
+  &.register-panel {
+    background-color: #fff;
+  }
 }
 
 .login-form {

@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from "react";
-import "./Login.css";
+import "./Auth.css";
 import axios, { AxiosError } from "axios";
 import Cookies from "universal-cookie";
 import { InputStatus } from "antd/lib/_util/statusUtils";
@@ -18,7 +18,7 @@ import EyeInvisibleOutlined from "@ant-design/icons/EyeInvisibleOutlined";
 import LockOutlined from "@ant-design/icons/LockOutlined";
 import notification from "antd/lib/notification";
 import iot_logo from "../../assets/iot_logo.png";
-import iot_info from "../../assets/iot_info.png";
+import InfoPanel from "./InfoPanel";
 
 function Login() {
   const navigate = useNavigate();
@@ -48,11 +48,16 @@ function Login() {
   const onLogin = useCallback(async () => {
     try {
       const {
-        data: { data: token },
+        data: { data: token, message },
       } = await axios.post("/login", { username, password });
       const cookies = new Cookies();
       cookies.set("access_token", token);
-      navigate(0);
+      notification.success({
+        message: message,
+      });
+      setTimeout(() => {
+        navigate(0);
+      }, 500);
     } catch (error) {
       if (error instanceof AxiosError) {
         notification.error({
@@ -81,10 +86,14 @@ function Login() {
     }
   }, [username, password, onLogin]);
 
+  const onGoToRegister = useCallback(() => {
+    navigate("/register");
+  }, [navigate]);
+
   return (
     <div className="container">
       <Splitter className="splitter">
-        <Panel className="panel" resizable={false}>
+        <Panel className="panel panel-left" resizable={false}>
           <div className="login-form">
             <Space align="center">
               <Image src={iot_logo} preview={false} width={48} height={48} />
@@ -128,22 +137,14 @@ function Login() {
             </Space>
             <Flex justify="center" className="footer-form">
               <Typography.Text>Don't have an account?</Typography.Text>
-              <Typography.Link>Create an account</Typography.Link>
+              <Typography.Link onClick={onGoToRegister}>
+                Create an account
+              </Typography.Link>
             </Flex>
           </div>
         </Panel>
-        <Panel className="panel" resizable={false}>
-          <Space className="space-container info-onboard" direction="vertical">
-            <Image className="img-info" src={iot_info} preview={false} />
-            <Space size={0} direction="vertical">
-              <Typography.Title level={3} className="info-text">
-                Redefining possibilities with IoT.
-              </Typography.Title>
-              <Typography.Text className="info-text">
-                Smarter solutions for a connected life.
-              </Typography.Text>
-            </Space>
-          </Space>
+        <Panel className="panel panel-right" resizable={false}>
+          <InfoPanel />
         </Panel>
       </Splitter>
     </div>
