@@ -12,7 +12,7 @@ import EditOutlined from "@ant-design/icons/EditOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import { type TableProps } from "antd";
 import { IDevice } from "./interface/device.interface";
-import Device from "./Device";
+import ModalDevice from "./ModalDevice";
 import ModalDeleteDevice from "./ModalDeleteDevice";
 
 interface IOpenAction {
@@ -116,7 +116,7 @@ function Devices() {
         <Table<IDevice> columns={columns} dataSource={dataSource} />
       </Layout.Content>
       {isOpenAction.view && (
-        <Device
+        <ModalDevice
           deviceId={deviceId}
           isOpenModal={isOpenAction.view}
           onCloseAction={onCloseAction}
