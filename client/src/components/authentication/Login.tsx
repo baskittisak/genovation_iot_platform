@@ -1,4 +1,9 @@
-import { memo } from "react";
+import { memo, useCallback, useState } from "react";
+import "./Login.css";
+import axios, { AxiosError } from "axios";
+import Cookies from "universal-cookie";
+import { InputStatus } from "antd/lib/_util/statusUtils";
+import { useNavigate } from "react-router-dom";
 import Splitter from "antd/lib/splitter";
 import Panel from "antd/lib/splitter/Panel";
 import Image from "antd/lib/image";
@@ -11,11 +16,71 @@ import UserOutlined from "@ant-design/icons/UserOutlined";
 import EyeTwoTone from "@ant-design/icons/EyeTwoTone";
 import EyeInvisibleOutlined from "@ant-design/icons/EyeInvisibleOutlined";
 import LockOutlined from "@ant-design/icons/LockOutlined";
+import notification from "antd/lib/notification";
 import iot_logo from "../../assets/iot_logo.png";
 import iot_info from "../../assets/iot_info.png";
-import "./Login.css";
 
 function Login() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [status, setStatus] = useState<{
+    username?: InputStatus;
+    password?: InputStatus;
+  }>();
+
+  const onChangeUserName = useCallback((value: string) => {
+    setUsername(value);
+    setStatus((status) => ({
+      ...status,
+      username: !value ? "error" : "",
+    }));
+  }, []);
+
+  const onChangeUserPassword = useCallback((value: string) => {
+    setPassword(value);
+    setStatus((status) => ({
+      ...status,
+      password: !value ? "error" : "",
+    }));
+  }, []);
+
+  const onLogin = useCallback(async () => {
+    try {
+      const {
+        data: { data: token },
+      } = await axios.post("/login", { username, password });
+      const cookies = new Cookies();
+      cookies.set("access_token", token);
+      navigate(0);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        notification.error({
+          message: error.response?.data?.message,
+          description: "Please try again.",
+        });
+      } else {
+        notification.error({
+          message: (error as string).toString(),
+          description: "Please try again.",
+        });
+      }
+    }
+  }, [username, password, navigate]);
+
+  const onValidateLogin = useCallback(async () => {
+    if (!username || !password) {
+      setStatus(() => ({
+        username: !username ? "error" : "",
+        password: !password ? "error" : "",
+      }));
+    }
+
+    if (username && password) {
+      await onLogin();
+    }
+  }, [username, password, onLogin]);
+
   return (
     <div className="container">
       <Splitter className="splitter">
@@ -38,6 +103,8 @@ function Login() {
                   size="large"
                   placeholder="Username"
                   prefix={<UserOutlined />}
+                  onChange={(event) => onChangeUserName(event.target.value)}
+                  status={status?.username}
                 />
                 <Input.Password
                   size="large"
@@ -46,9 +113,16 @@ function Login() {
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                   }
                   prefix={<LockOutlined />}
+                  onChange={(event) => onChangeUserPassword(event.target.value)}
+                  status={status?.password}
                 />
               </Space>
-              <Button type="primary" size="large" block>
+              <Button
+                type="primary"
+                size="large"
+                block
+                onClick={onValidateLogin}
+              >
                 Log in
               </Button>
             </Space>
