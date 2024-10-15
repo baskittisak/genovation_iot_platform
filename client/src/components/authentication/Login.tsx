@@ -13,11 +13,11 @@ import Typography from "antd/lib/typography";
 import Input from "antd/lib/input";
 import Button from "antd/lib/button";
 import Flex from "antd/lib/flex";
+import notification from "antd/lib/notification";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 import EyeTwoTone from "@ant-design/icons/EyeTwoTone";
 import EyeInvisibleOutlined from "@ant-design/icons/EyeInvisibleOutlined";
 import LockOutlined from "@ant-design/icons/LockOutlined";
-import notification from "antd/lib/notification";
 import iot_logo from "../../assets/iot_logo.png";
 import InfoPanel from "./InfoPanel";
 

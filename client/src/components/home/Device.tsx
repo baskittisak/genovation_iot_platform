@@ -7,18 +7,12 @@ import Empty from "antd/lib/empty";
 import Button from "antd/lib/button";
 import Space from "antd/lib/space";
 import Typography from "antd/lib/typography";
+import { IDevice } from "./interface/device.interface";
 
 interface DeviceProps {
   deviceId: string;
   isOpenModal: boolean;
   onCloseAction: (action: "view") => void;
-}
-
-interface IDevice {
-  id: string;
-  name: string;
-  description: number;
-  feature: string[];
 }
 
 function Device({ deviceId, isOpenModal, onCloseAction }: DeviceProps) {

@@ -11,14 +11,9 @@ import EyeOutlined from "@ant-design/icons/EyeOutlined";
 import EditOutlined from "@ant-design/icons/EditOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import { type TableProps } from "antd";
+import { IDevice } from "./interface/device.interface";
 import Device from "./Device";
-
-interface IDevice {
-  key: string;
-  id: string;
-  name: string;
-  description: number;
-}
+import ModalDeleteDevice from "./ModalDeleteDevice";
 
 interface IOpenAction {
   view: boolean;
@@ -36,7 +31,7 @@ function Devices() {
     delete: false,
   });
 
-  const { data, error } = useSWR<IDevice[]>("/devices");
+  const { data, error, mutate } = useSWR<IDevice[]>("/devices");
 
   const onView = useCallback((id: string) => {
     setDeviceId(id);
@@ -111,7 +106,6 @@ function Devices() {
     }));
   }, [data]);
 
-
   if (!data) return <Skeleton />;
   if (error) return <Empty />;
 
@@ -126,6 +120,14 @@ function Devices() {
           deviceId={deviceId}
           isOpenModal={isOpenAction.view}
           onCloseAction={onCloseAction}
+        />
+      )}
+      {isOpenAction.delete && (
+        <ModalDeleteDevice
+          deviceId={deviceId}
+          isOpenModal={isOpenAction.delete}
+          onCloseAction={onCloseAction}
+          mutateDevices={mutate}
         />
       )}
     </>
