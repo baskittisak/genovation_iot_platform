@@ -3,9 +3,9 @@ import axios from "./axios";
 export const fetcher = async (url: string) => {
   try {
     const {
-      data: { data, message },
+      data: { data },
     } = await axios.get(url);
-    return { data, message };
+    return data;
   } catch (error) {
     return Promise.reject(error);
   }
