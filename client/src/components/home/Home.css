@@ -24,3 +24,15 @@
 .username {
   color: #fff;
 }
+
+.devices-container {
+  height: 100vh;
+  padding: 16px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.action {
+  cursor: pointer;
+  font-size: 20px;
+}

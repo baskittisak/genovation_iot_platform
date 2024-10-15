@@ -37,33 +37,31 @@ function SideBar() {
   }, [onLogout]);
 
   return (
-    <>
-      <Layout.Sider className="sidebar-container">
-        <Space className="logo" align="center">
-          <Image src={iot_logo} preview={false} width={48} height={48} />
-          <Typography.Title level={4} className="topic-text">
-            IoT Platform
-          </Typography.Title>
-        </Space>
-        <Menu
-          className="menu-container"
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={items}
-        />
-        <Space
-          className="user-container"
-          align="center"
-          onClick={onConfirmLogout}
-        >
-          <Avatar className="avatar-user" icon={<UserOutlined />} />
-          <Typography.Text className="username">
-            {cookies.get("username")}
-          </Typography.Text>
-        </Space>
-      </Layout.Sider>
-    </>
+    <Layout.Sider className="sidebar-container">
+      <Space className="logo" align="center">
+        <Image src={iot_logo} preview={false} width={48} height={48} />
+        <Typography.Title level={4} className="topic-text">
+          IoT Platform
+        </Typography.Title>
+      </Space>
+      <Menu
+        className="menu-container"
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={["1"]}
+        items={items}
+      />
+      <Space
+        className="user-container"
+        align="center"
+        onClick={onConfirmLogout}
+      >
+        <Avatar className="avatar-user" icon={<UserOutlined />} />
+        <Typography.Text className="username">
+          {cookies.get("username")}
+        </Typography.Text>
+      </Space>
+    </Layout.Sider>
   );
 }
 
