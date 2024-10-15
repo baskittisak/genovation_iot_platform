@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Cookies from "universal-cookie";
 import Result from "antd/lib/result";
 import Button from "antd/lib/button";
 
@@ -8,7 +8,9 @@ function NotFound() {
   const navigate = useNavigate();
 
   const onBackHome = useCallback(() => {
-    navigate("/");
+    const cookies = new Cookies();
+    const isLoggedIn = !!cookies.get("access_token");
+    navigate(isLoggedIn ? "/" : "/login");
   }, [navigate]);
 
   return (

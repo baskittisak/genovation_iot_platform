@@ -5,15 +5,13 @@ import PageRoutes from "./PageRoutes";
 
 function App() {
   return (
-    <>
-      <SWRConfig
-        value={{
-          fetcher,
-        }}
-      >
-        <PageRoutes />
-      </SWRConfig>
-    </>
+    <SWRConfig
+      value={{
+        fetcher,
+      }}
+    >
+      <PageRoutes />
+    </SWRConfig>
   );
 }
 
