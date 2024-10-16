@@ -16,10 +16,8 @@ export const createDevice = async (
     res.status(201).json({ message: "Device created successfully" });
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error);
       res.status(500).json({ message: error.message });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -39,10 +37,8 @@ export const getAllDevice = async (_: Request, res: Response) => {
       .json({ data: devices, message: "Device retrieved successfully" });
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error);
       res.status(500).json({ message: error.message });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -72,10 +68,8 @@ export const getDeviceById = async (
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error);
       res.status(500).json({ message: error.message });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -107,10 +101,8 @@ export const updateDevice = async (
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error);
       res.status(500).json({ message: error.message });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -135,10 +127,8 @@ export const deleteDevice = async (
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error);
       res.status(500).json({ message: error.message });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }

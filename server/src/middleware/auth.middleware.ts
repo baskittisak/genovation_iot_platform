@@ -12,7 +12,12 @@ export const authCheckToken = (
 
     if (token) {
       const { SECRET_KEY } = process.env;
-      if (!SECRET_KEY) throw "Internal server error: Missing SECRET_KEY";
+      if (!SECRET_KEY) {
+        res
+          .status(500)
+          .json({ message: "Internal server error: Missing SECRET_KEY" });
+        return;
+      }
 
       jwt.verify(token, SECRET_KEY);
       next();
@@ -22,7 +27,6 @@ export const authCheckToken = (
         .json({ message: "No token provided, authorization denied" });
     }
   } catch (error) {
-    console.error(error);
     res.status(403).json({ message: "Token is expired" });
   }
 };

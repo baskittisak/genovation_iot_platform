@@ -26,10 +26,8 @@ export const register = async (req: TypedBodyRequest<IUser>, res: Response) => {
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error);
       res.status(500).json({ message: error.message });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -75,10 +73,8 @@ export const login = async (req: TypedBodyRequest<IUser>, res: Response) => {
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error);
       res.status(500).json({ message: error.message });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
