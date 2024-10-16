@@ -12,9 +12,9 @@ services:
     build:
       context: ./server
     ports:
-      - "5000:8080"
+      - "8080:8080"
     environment:
-      - MONGODB_URI=mongodb://127.0.0.1:27017/iot_platform
+      - MONGODB_URI=mongodb://mongo:27017/iot_platform
     depends_on:
       - mongo
 
