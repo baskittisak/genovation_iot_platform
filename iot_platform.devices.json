@@ -1,0 +1,116 @@
+[{
+  "_id": {
+    "$oid": "670d48c47636c0b71f93c7d4"
+  },
+  "name": "Smart Light Bulbs",
+  "description": "Lights that can be controlled for on/off and brightness adjustment via a mobile app or voice assistant.",
+  "feature": [
+    "Scheduling",
+    "Remote control",
+    "Color changing"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d492e7636c0b71f93c7d6"
+  },
+  "name": "CCTV Cameras",
+  "description": "Cameras that allow live viewing or recording for security purposes.",
+  "feature": [
+    "Motion detection",
+    "Alerts when motion is detected",
+    "Mobile app viewing"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d49717636c0b71f93c7d8"
+  },
+  "name": "Temperature and Humidity Sensors",
+  "description": "Used for monitoring weather conditions in rooms or greenhouses.",
+  "feature": [
+    "Sending data to an app",
+    "Alerts when temperature or humidity exceeds set values"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d49b07636c0b71f93c7da"
+  },
+  "name": "Smart Locks",
+  "description": "Locks that can be controlled via mobile devices or keycards.",
+  "feature": [
+    "Remote access control",
+    "Unlocking via passwords or apps",
+    "Access history"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d49d37636c0b71f93c7dc"
+  },
+  "name": "Smoke and Gas Detectors",
+  "description": "Devices that detect smoke or dangerous gases.",
+  "feature": [
+    "Alerts via mobile app when threats are detected."
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d49fe7636c0b71f93c7de"
+  },
+  "name": "Smart Air Purifiers",
+  "description": "Air purifiers that can be controlled remotely.",
+  "feature": [
+    "Air quality monitoring",
+    "Scheduling",
+    "Fan speed control"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d4a327636c0b71f93c7e0"
+  },
+  "name": "Smart Thermostats",
+  "description": "Devices that control the temperature in homes.",
+  "feature": [
+    "Automatic scheduling",
+    "Learning energy usage behavior",
+    "App control"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d4a597636c0b71f93c7e2"
+  },
+  "name": "Health Monitoring Devices",
+  "description": "Such as smartwatches that track fitness and health.",
+  "feature": [
+    "Heart rate monitoring",
+    "Step counting",
+    "Sleep tracking"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d4a797636c0b71f93c7e4"
+  },
+  "name": "Smart Irrigation Systems",
+  "description": "Controls watering plants based on weather conditions and soil moisture.",
+  "feature": [
+    "Scheduled watering",
+    "Alerts when weather conditions are unsuitable"
+  ]
+},
+{
+  "_id": {
+    "$oid": "670d4aa97636c0b71f93c7e6"
+  },
+  "name": "Smart Remote Controls",
+  "description": "Controls various electronic devices remotely.",
+  "feature": [
+    "Control TVs",
+    "Sound systems",
+    "Control other smart home devices"
+  ]
+}]
