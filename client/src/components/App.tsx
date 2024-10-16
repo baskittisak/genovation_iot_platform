@@ -7,6 +7,7 @@ function App() {
   return (
     <SWRConfig
       value={{
+        shouldRetryOnError: false,
         fetcher,
       }}
     >

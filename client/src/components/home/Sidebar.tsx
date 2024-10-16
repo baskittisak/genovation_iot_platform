@@ -1,6 +1,6 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback } from "react";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
+import { onLogout } from "../../utils/authService";
 import Cookies from "universal-cookie";
 import Layout from "antd/lib/layout";
 import Menu from "antd/lib/menu";
@@ -17,14 +17,7 @@ import iot_logo from "../../assets/iot_logo.png";
 const items = [{ key: "1", icon: <DatabaseOutlined />, label: "IoT Devices" }];
 
 function SideBar() {
-  const [cookies] = useState(new Cookies());
-  const navigate = useNavigate();
-
-  const onLogout = useCallback(() => {
-    cookies.remove("access_token");
-    cookies.remove("username");
-    navigate(0);
-  }, [cookies, navigate]);
+  const cookies = new Cookies();
 
   const onConfirmLogout = useCallback(() => {
     modal.confirm({
@@ -34,7 +27,7 @@ function SideBar() {
       cancelText: "Cancel",
       onOk: () => onLogout(),
     });
-  }, [onLogout]);
+  }, []);
 
   return (
     <Layout.Sider className="sidebar-container">

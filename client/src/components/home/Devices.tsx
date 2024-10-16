@@ -118,7 +118,7 @@ function Devices() {
     }));
   }, [data]);
 
-  if (!data) return <Skeleton />;
+  if (!data && !error) return <Skeleton />;
   if (error) return <Empty />;
 
   return (

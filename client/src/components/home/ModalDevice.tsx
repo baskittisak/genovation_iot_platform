@@ -15,10 +15,14 @@ interface ModalDeviceProps {
   onCloseAction: (action: "view") => void;
 }
 
-function ModalDevice({ deviceId, isOpenModal, onCloseAction }: ModalDeviceProps) {
+function ModalDevice({
+  deviceId,
+  isOpenModal,
+  onCloseAction,
+}: ModalDeviceProps) {
   const { data, error } = useSWR<IDevice>(`/device/${deviceId}`);
 
-  if (!data) return <Skeleton />;
+  if (!data && !error) return <Skeleton />;
   if (error) return <Empty />;
 
   return (
@@ -42,7 +46,7 @@ function ModalDevice({ deviceId, isOpenModal, onCloseAction }: ModalDeviceProps)
             Name:
           </Typography.Title>
           <Typography.Title level={5} className="detail-text">
-            {data.name}
+            {data?.name}
           </Typography.Title>
         </Space>
         <Space align="start">
@@ -50,7 +54,7 @@ function ModalDevice({ deviceId, isOpenModal, onCloseAction }: ModalDeviceProps)
             Description:
           </Typography.Title>
           <Typography.Title level={5} className="detail-text">
-            {data.description}
+            {data?.description}
           </Typography.Title>
         </Space>
         <Space align="start">
@@ -58,7 +62,7 @@ function ModalDevice({ deviceId, isOpenModal, onCloseAction }: ModalDeviceProps)
             Feature:
           </Typography.Title>
           <Typography.Title level={5} className="detail-text">
-            {data.feature.join(", ")}
+            {data?.feature.join(", ")}
           </Typography.Title>
         </Space>
       </Space>

@@ -1,7 +1,8 @@
 import { memo, useCallback, useState } from "react";
 import "./Home.css";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { KeyedMutator } from "swr";
+import { handleError } from "../../utils/authService";
 import Modal from "antd/lib/modal";
 import Button from "antd/lib/button";
 import Space from "antd/lib/space";
@@ -38,17 +39,7 @@ function ModalDeleteDevice({
       onCloseAction("delete");
       mutateDevices();
     } catch (error) {
-      if (error instanceof AxiosError) {
-        notification.error({
-          message: error.response?.data?.message,
-          description: "Please try again.",
-        });
-      } else {
-        notification.error({
-          message: (error as string).toString(),
-          description: "Please try again.",
-        });
-      }
+      handleError(error);
       setIsLoading(false);
       onCloseAction("delete");
     }

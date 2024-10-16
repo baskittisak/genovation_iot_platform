@@ -23,6 +23,6 @@ export const authCheckToken = (
     }
   } catch (error) {
     console.error(error);
-    res.status(403).json({ message: "Token is not valid" });
+    res.status(403).json({ message: "Token is expired" });
   }
 };

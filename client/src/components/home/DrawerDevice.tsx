@@ -1,7 +1,8 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import "./Home.css";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import useSWR, { KeyedMutator } from "swr";
+import { handleError } from "../../utils/authService";
 import Drawer from "antd/lib/drawer";
 import Input from "antd/lib/input";
 import Typography from "antd/lib/typography";
@@ -98,17 +99,7 @@ function DrawerDevice({
       onCloseAction(action);
       mutateDevices();
     } catch (error) {
-      if (error instanceof AxiosError) {
-        notification.error({
-          message: error.response?.data?.message,
-          description: "Please try again.",
-        });
-      } else {
-        notification.error({
-          message: (error as string).toString(),
-          description: "Please try again.",
-        });
-      }
+      handleError(error);
       setIsLoading(false);
     }
   }, [
@@ -122,7 +113,7 @@ function DrawerDevice({
     mutateDevices,
   ]);
 
-  if (isEdit && !data) return <Skeleton />;
+  if (isEdit && !data && !error) return <Skeleton />;
   if (isEdit && error) return <Empty />;
 
   return (

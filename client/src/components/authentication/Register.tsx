@@ -1,8 +1,9 @@
 import { memo, useCallback, useState } from "react";
 import "./Auth.css";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { InputStatus } from "antd/lib/_util/statusUtils";
 import { useNavigate } from "react-router-dom";
+import { handleError } from "../../utils/authService";
 import Splitter from "antd/lib/splitter";
 import Panel from "antd/lib/splitter/Panel";
 import Image from "antd/lib/image";
@@ -66,17 +67,7 @@ function Register() {
       });
       navigate("/");
     } catch (error) {
-      if (error instanceof AxiosError) {
-        notification.error({
-          message: error.response?.data?.message,
-          description: "Please try again.",
-        });
-      } else {
-        notification.error({
-          message: (error as string).toString(),
-          description: "Please try again.",
-        });
-      }
+      handleError(error);
     }
   }, [email, username, password, navigate]);
 
