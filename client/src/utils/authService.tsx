@@ -29,7 +29,7 @@ export const handleError = (error: unknown) => {
       });
     } else {
       notification.error({
-        message: error.response?.data?.message,
+        message: error.message,
         description: "Please try again.",
       });
     }
