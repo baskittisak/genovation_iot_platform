@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+export const blacklist = new Set<string>();
+
 export const authCheckToken = (
   req: Request,
   res: Response,
@@ -17,6 +19,12 @@ export const authCheckToken = (
           .status(500)
           .json({ message: "Internal server error: Missing SECRET_KEY" });
         return;
+      }
+
+      if (blacklist.has(token)) {
+        res
+          .status(401)
+          .json({ message: "Token invalid, authorization denied" });
       }
 
       jwt.verify(token, SECRET_KEY);

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { TypedBodyRequest } from "../config/request.config";
 import { IUser } from "./interface/user.interface";
+import { blacklist } from "../middleware/auth.middleware";
 import User from "../models/user.model";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -82,11 +83,16 @@ export const login = async (req: TypedBodyRequest<IUser>, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    const blacklist = new Set();
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
-    blacklist.add(token);
-    res.status(200).json({ message: "User logout successfully" });
+    if (token) {
+      blacklist.add(token);
+      res.status(200).json({ message: "User logout successfully" });
+    } else {
+      res
+        .status(401)
+        .json({ message: "No token provided, authorization denied" });
+    }
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
