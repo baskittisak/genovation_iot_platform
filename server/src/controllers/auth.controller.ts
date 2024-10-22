@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { TypedBodyRequest } from "../config/request.config";
 import { IUser } from "./interface/user.interface";
 import User from "../models/user.model";
@@ -71,6 +71,22 @@ export const login = async (req: TypedBodyRequest<IUser>, res: Response) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    const blacklist = new Set();
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    blacklist.add(token);
+    res.status(200).json({ message: "User logout successfully" });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

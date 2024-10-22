@@ -1,13 +1,18 @@
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import Cookies from "universal-cookie";
 import modal from "antd/lib/modal";
 import notification from "antd/lib/notification";
 
-export const onLogout = () => {
-  const cookies = new Cookies();
-  cookies.remove("access_token");
-  cookies.remove("username");
-  window.location.reload();
+export const onLogout = async () => {
+  try {
+    await axios.post("/logout");
+    const cookies = new Cookies();
+    cookies.remove("access_token");
+    cookies.remove("username");
+    window.location.reload();
+  } catch (error) {
+    handleError(error);
+  }
 };
 
 export const handleError = (error: unknown) => {
@@ -18,7 +23,9 @@ export const handleError = (error: unknown) => {
       modal.error({
         title: message,
         content: "Please log out and log in again to obtain a new token.",
-        onOk: () => onLogout(),
+        onOk: async () => {
+          await onLogout();
+        },
       });
     } else {
       notification.error({

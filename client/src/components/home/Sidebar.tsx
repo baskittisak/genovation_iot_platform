@@ -25,7 +25,9 @@ function SideBar() {
       icon: <ExclamationCircleOutlined />,
       okText: "Yes",
       cancelText: "Cancel",
-      onOk: () => onLogout(),
+      onOk: async () => {
+        await onLogout();
+      },
     });
   }, []);
 
